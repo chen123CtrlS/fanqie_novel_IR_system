@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+	<style>
+		.red{
+			color: red;
+		}
+		.blue{
+			color:blue;
+		}
+		.green{
+			color:green;
+		}
+		em{
+			font-style: normal;/*更改em的斜体样式为默认，显示为标准字体*/
+			color: red;
+		}
+		.hui{
+			color:#524F4F;
+
+		}
+		.one{
+			text-decoration: underline;/*给类名为"one"的标签设置文字下划线*/
+			color:#999
+
+		}
+		.size{
+			font-size:20px;/*给标题文字大小设置为20px*/
+		}
+    }
+	</style>
+<meta charset="utf-8">
+<title>搜索结果</title>
+	{% load static %}
+    <link href="{% static 'plugins/bootstrap-3.4.1/css/bootstrap.min.css'%}" rel="stylesheet">
+</head>
+<body style="background-image: url('https://img2.baidu.com/it/u=4128957097,3317516228&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=269');  background-size:100%">
+
+    <!-- search form -->
+    <div class="row search-form">
+        <form action="query" method="get">
+
+            <div class="col-xs-offset-1 col-xs-5" style="width:300px; height:50px;">
+                <input type="text" id="query_input1" name="context" value="{{ c_query }}" placeholder="Search by chapter" class="form-control">
+<!--            </div>-->
+<!--           <div class="col-xs-offset-1 col-xs-5" style="width:300px; height:25px;">-->
+                <input type="text" id="query_input2" name="abstract" value="{{ a_query }}" placeholder="Search by abstract" class="form-control">
+            </div>
+
+            <div class="col-xs-2" style="width:100px; height:100px;">
+                <button class="col-xs-3 btn btn-block btn-primary search-btn" type="submit">
+                    <small>
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </small>
+                </button>
+            </div>
+        </form>
+		    <img id="s_lg_img" class="s_lg_img_gold_show" src="data:image/jpeg;base64,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" width="270" height="129" onerror="this.src='https://dss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1-66368c33f8.png';this.onerror=null;" usemap="#mp">
+    <map name="mp" id="s_mp"><area style="cursor:pointer;outline:none;" shape="rect" coords="100,100,270,129" href="https://fanqienovel.com/rank/xuanhuan" target="_blank" title="点击一下，了解更多" onmousedown="return ns_c({'fm':'behs','tab':'bdlogo'})"></map>
+
+	</div>
+	<div class="alert alert-warning" role="alert">
+      <strong> Below, the search results of abstracts. </strong>
+    </div>
+    <!-- end of search form -->
+	<!--简介查询结果-->
+	{% for obj in abstract_res %}
+	<a class="title" href="{{obj.url}}">
+		{{obj.title}}
+	</a>
+	<p class="content">
+		{{obj.abstract}}
+	</p>
+	<p>
+		<em class="green">{{obj.url}}</em>
+		-<em class="one">作者:{{obj.author}}</em>
+	</p>
+	{% endfor %}
+<div class="alert alert-warning" role="alert">
+      <strong> Below, the search results of chapters. </strong>
+    </div>
+
+{% for obj in context_res %}
+	<a class="title1" href="{{obj.url}}">
+		{{obj.title}}
+	</a>
+	<p>
+		<em class="green">{{obj.url}}</em>
+		-<em class="one">书名:{{obj.novel}}</em>
+	</p>
+{% endfor %}
+
+
+</body>
+
+<script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-3.4.1/js/bootstrap.min.js' %}"></script>
+
+<script type="text/javascript">
+var n = document.getElementsByClassName("content").length
+for (var i=0;i<n;i++)
+{
+    document.getElementsByClassName("content")[i].innerHTML = document.getElementsByClassName("content")[i].innerHTML.replace(/{{a_query}}/ig,"<span style='color: red;'>$&</span>");
+	document.getElementsByClassName("title")[i].innerHTML = document.getElementsByClassName("title")[i].innerHTML.replace(/{{a_query}}/ig,"<span style='color: red;'>$&</span>");
+}
+var n1 = document.getElementsByClassName("title1").length
+for (var i=0;i<n1;i++)
+{
+	document.getElementsByClassName("title1")[i].innerHTML = document.getElementsByClassName("title1")[i].innerHTML.replace(/{{c_query}}/ig,"<span style='color: red;'>$&</span>");
+}
+</script>
+
+</html>
